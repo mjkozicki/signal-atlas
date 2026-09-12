@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand RSSI and dBm, frequency, channel width, observation counts, Wi-Fi configuration scores, and their limits.">
+  <meta name="theme-color" content="#101e2c">
+  <meta property="og:title" content="Measurements — Signal Atlas">
+  <meta property="og:description" content="Understand RSSI and dBm, frequency, channel width, observation counts, Wi-Fi configuration scores, and their limits.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mjkozicki.github.io/signal-atlas/measurements.html">
+  <link rel="canonical" href="https://mjkozicki.github.io/signal-atlas/measurements.html">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site.js" defer></script>
+  <title>Measurements — Signal Atlas</title>
+  <script src="./guide.js" type="module"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header wrap"><a class="brand" href="./" aria-label="Signal Atlas home"><img src="./assets/icon.svg" alt="" width="36" height="36">Signal Atlas</a><nav aria-label="Main navigation"><a href="./index.html">Home</a><a href="./scanners.html">Scanners</a><a href="./quickstart.html">Quickstart</a><a href="./about.html" aria-current="page">About</a><a class="nav-github" href="https://github.com/mjkozicki/signal-atlas">GitHub <span aria-hidden="true">↗</span></a></nav></header>
+<main id="main">
+<div class="guide-shell wrap"><div class="page-intro"><p class="eyebrow">ABOUT / MEASUREMENTS</p><h1>Understand the measurements.</h1><p class="lead">Read the same measurement guide available inside the app. Values describe one observation and the sensor that collected it.</p></div><nav class="guide-nav" aria-label="About guide"><a href="./about.html">Overview</a><a href="./measurements.html" aria-current="page">Measurements</a><a href="./process.html">Scan process</a><a href="./glossary.html">Glossary</a></nav><section id="measurements" class="guide-section" aria-labelledby="measurements-title">
+  <div class="section-heading"><p class="eyebrow">READ THE NUMBERS</p><h2 id="measurements-title">Read the numbers with context</h2><p>Every value describes the selected observation and the sensor that collected it.</p></div>
+  <div class="measurement-grid">
+    <article class="panel signal-explainer"><div class="card-heading"><h3>RSSI & dBm</h3></div><p>RSSI means Received Signal Strength Indicator. Here, the signal value is reported in dBm: power relative to one milliwatt on a logarithmic scale. A less negative value is stronger: −50 dBm is stronger than −70 dBm.</p>
+      <div class="signal-demo"><span class="example-label">ILLUSTRATION · NOT A LIVE READING</span><label for="example-rssi">Example received signal <output id="signal-value" for="example-rssi">−60 dBm</output></label><input id="example-rssi" type="range" min="-90" max="-30" step="5" value="-60" disabled aria-valuetext="−60 dBm"/><div class="signal-scale"><span>−90 · weaker</span><span>−30 · stronger</span></div><p><strong id="relative-power">1×</strong> the received power of −60 dBm. A 10 dB increase means ten times the power; it does not mean ten times the speed.</p><noscript><p>Enable JavaScript to move the illustration. At −50 dBm the received power is 10× the −60 dBm example; at −70 dBm it is 0.1×.</p></noscript></div>
+      <p class="small-note">Walls, orientation, interference, distance, and adapter calibration affect readings. Signal alone cannot establish throughput, reliability, or distance. NFC does not report RSSI here. <a href="https://www.cisco.com/c/en/us/support/docs/wireless-mobility/wireless-lan-wlan/71113-rrm-new.html" target="_blank" rel="noreferrer">Radio measurement reference ↗</a></p>
+    </article>
+    <article class="panel"><h3>Band, channel & channel width</h3><dl class="explanations"><div><dt>Band · GHz</dt><dd>The frequency range, such as 2.4, 5, or 6 GHz. GHz means billions of cycles per second; it is not a data rate.</dd></div><div><dt>Frequency · MHz</dt><dd>A radio frequency in millions of cycles per second. For example, 2412 MHz is a frequency in the 2.4 GHz band.</dd></div><div><dt>Channel</dt><dd>A numbered frequency assignment within a band. Read the band together with the channel; channel numbers can repeat across bands.</dd></div><div><dt>Width · MHz</dt><dd>The amount of spectrum a channel uses, such as 20, 40, or 80 MHz. Wider channels occupy more spectrum; they do not guarantee faster service. This parser may report unknown or only a basic width hint.</dd></div><div><dt>Wi-Fi generation</dt><dd>A capability hint from decoded announcements. It is not the speed negotiated by a client; advanced generations and features may be unrecognized.</dd></div></dl></article>
+    <article class="panel"><h3>Counts, timestamps & RF charts</h3><p><strong>First / last seen</strong> bound the observations within a snapshot, not the lifetime of a device. Wi-Fi uses capture timestamps; Bluetooth/NFC use the local collection clock. The dashboard displays times in your browser’s local timezone.</p><ul><li><strong>Wi-Fi observations:</strong> accepted beacon/probe-response observations grouped by BSSID.</li><li><strong>Bluetooth observations:</strong> provider advertisement callbacks, not a raw RF packet count.</li><li><strong>NFC observations:</strong> tag presentations; leaving a tag on the reader does not repeatedly increment the count.</li></ul><p>The Wi-Fi curves show received signal by AP, ordered by name. Primary channel occupancy counts APs, not busy-airtime percentage. Counts alone cannot identify interference or a best channel.</p><p class="small-note">The app does not measure internet speed, latency, packet loss, noise floor, or signal-to-noise ratio (SNR). An unknown value or “—” means unavailable, not zero.</p></article>
+    <article class="panel"><h3>Configuration score · 0–100</h3><p>Wi-Fi scoring covers only inventory-matched APs. Each starts at 100 and loses points for its findings, with a minimum of zero.</p><div class="penalties"><span><b>−40</b>Critical</span><span><b>−25</b>High</span><span><b>−10</b>Medium</span><span><b>−3</b>Low</span></div><p class="score-example">Example: one high and one medium finding gives an AP <strong>65 / 100</strong>.</p><p>The displayed score is the mean of authorized AP scores, rounded down. With no authorized APs, or incomplete security decoding on an authorized AP, the score is unknown.</p><p>A high score means fewer findings under the current rules. It does not certify password strength, firmware, client behavior, or overall security. Bluetooth and NFC have no security score.</p></article>
+  </div>
+</section><div class="next-page"><a class="text-link" href="./process.html">Next: follow the scan process ↗</a></div></div>
+</main>
+  <footer class="footer wrap"><a class="brand" href="./"><img src="./assets/icon.svg" alt="" width="28" height="28">Signal Atlas</a><p>© 2026 Michael Kozicki</p><a href="https://github.com/mjkozicki/signal-atlas/blob/main/SECURITY.md">Report a security issue</a></footer>
+</body>
+</html>

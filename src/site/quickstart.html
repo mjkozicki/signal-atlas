@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build and run Signal Atlas with Docker or root npm commands. Start with synthetic data, then configure your local hardware.">
+  <meta name="theme-color" content="#101e2c">
+  <meta property="og:title" content="Quickstart — Signal Atlas">
+  <meta property="og:description" content="Build and run Signal Atlas with Docker or root npm commands. Start with synthetic data, then configure your local hardware.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mjkozicki.github.io/signal-atlas/quickstart.html">
+  <link rel="canonical" href="https://mjkozicki.github.io/signal-atlas/quickstart.html">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site.js" defer></script>
+  <title>Quickstart — Signal Atlas</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header wrap"><a class="brand" href="./" aria-label="Signal Atlas home"><img src="./assets/icon.svg" alt="" width="36" height="36">Signal Atlas</a><nav aria-label="Main navigation"><a href="./index.html">Home</a><a href="./scanners.html">Scanners</a><a href="./quickstart.html" aria-current="page">Quickstart</a><a href="./about.html">About</a><a class="nav-github" href="https://github.com/mjkozicki/signal-atlas">GitHub <span aria-hidden="true">↗</span></a></nav></header>
+<main id="main">
+    <section id="quickstart" class="section wrap" aria-labelledby="quickstart-title">
+      <div class="page-intro"><p class="eyebrow">QUICKSTART / GET RUNNING</p><h1 id="quickstart-title">Your first scan can be synthetic.</h1><p>Try all three services without a radio, reader, or special permissions. Choose Docker for the demo, or build natively for hardware setup.</p></div>
+      <div class="quickstart-grid">
+        <article class="install"><div class="install-heading"><div><span class="protocol-label">RECOMMENDED FOR A FIRST LOOK</span><h3>Run with Docker</h3></div><span class="install-badge">Demo ready</span></div><p>Start Docker Engine/Desktop with Compose, then run:</p><div class="code-block"><button type="button" class="copy" data-copy="docker-command" hidden>Copy</button><pre><code id="docker-command">git clone https://github.com/mjkozicki/signal-atlas.git
+cd signal-atlas
+docker compose up --build -d --wait</code></pre></div><p>Open <code>http://127.0.0.1:8787</code>. With npm installed, <code>npm run docker</code> also builds and launches the container. Snapshots persist in a named volume. Stop with <code>docker compose down</code>.</p><a class="text-link" href="https://github.com/mjkozicki/signal-atlas/blob/main/docs/docker.md">Docker setup &amp; hardware limits <span aria-hidden="true">↗</span></a></article>
+        <article class="install"><div class="install-heading"><div><span class="protocol-label">FOR LOCAL DEVELOPMENT &amp; HARDWARE</span><h3>Build from source</h3></div></div><p>Requires Go 1.26.4+, Node 22.12+, and npm.</p><div class="code-block"><button type="button" class="copy" data-copy="native-command" hidden>Copy</button><pre><code id="native-command">git clone https://github.com/mjkozicki/signal-atlas.git
+cd signal-atlas
+npm ci
+npm run local -- --demo</code></pre></div><p>Open <code>http://127.0.0.1:8787</code>. The documented build workflow uses macOS or Linux; use WSL on Windows.</p><a class="text-link" href="https://github.com/mjkozicki/signal-atlas/blob/main/quickstart.md">Read the full quickstart <span aria-hidden="true">↗</span></a></article>
+      </div>
+      <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      <aside class="hardware-note"><strong>Ready for real observations?</strong><p>The Docker image supports demos and stored-data workflows. Live Wi-Fi capture needs Linux monitor-mode hardware; Bluetooth and NFC need their native providers and compatible devices. Hardware behavior varies by OS, adapter, reader, and tag. Follow the protocol guides before starting a live scan.</p></aside>
+      <p class="site-note">This website introduces the project. Scanning and saved observations live in the app you run on your own machine.</p>
+    <div class="reading-note"><h2>From a demo to your own observations</h2><p>Use <code>npm run local</code> for normal local databases. Import Wi-Fi captures through the dashboard, or install native providers for Bluetooth/NFC. To build without launching, run <code>npm run build</code>.</p><p><a class="inline-link" href="./process.html">Follow the scan process</a> or <a class="inline-link" href="./measurements.html">learn how to read the measurements</a> before comparing snapshots.</p></div></section>
+
+
+</main>
+  <footer class="footer wrap"><a class="brand" href="./"><img src="./assets/icon.svg" alt="" width="28" height="28">Signal Atlas</a><p>© 2026 Michael Kozicki</p><a href="https://github.com/mjkozicki/signal-atlas/blob/main/SECURITY.md">Report a security issue</a></footer>
+</body>
+</html>

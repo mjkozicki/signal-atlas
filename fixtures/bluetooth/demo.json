@@ -1,0 +1,52 @@
+{
+  "id": "fixture-bluetooth-demo",
+  "protocol": "bluetooth",
+  "mode": "demo",
+  "source": "demo",
+  "state": "completed",
+  "created_at": "2026-09-12T12:00:00Z",
+  "ended_at": "2026-09-12T12:00:10Z",
+  "duration_seconds": 10,
+  "devices": [
+    {
+      "id": "demo:ble:climate",
+      "name": "Studio climate sensor",
+      "first_seen": "2026-09-12T12:00:00Z",
+      "last_seen": "2026-09-12T12:00:10Z",
+      "observations": 12,
+      "rssi": -48,
+      "details": {
+        "identifier_type": "Synthetic identifier",
+        "manufacturer_data": {
+          "65535": "01020304"
+        },
+        "scan_mode": "demo",
+        "service_uuids": [
+          "0000181a-0000-1000-8000-00805f9b34fb"
+        ],
+        "transport": "BLE"
+      }
+    },
+    {
+      "id": "demo:ble:beacon",
+      "name": "Workshop beacon",
+      "first_seen": "2026-09-12T12:00:00Z",
+      "last_seen": "2026-09-12T12:00:10Z",
+      "observations": 7,
+      "rssi": -71,
+      "details": {
+        "identifier_type": "Synthetic identifier",
+        "scan_mode": "demo",
+        "service_data": {
+          "0000feaa-0000-1000-8000-00805f9b34fb": "00"
+        },
+        "service_uuids": [],
+        "transport": "BLE"
+      }
+    }
+  ],
+  "warnings": [
+    "Synthetic Bluetooth demonstration; no adapter was accessed.",
+    "Advertisement discovery does not establish device security or ownership."
+  ]
+}

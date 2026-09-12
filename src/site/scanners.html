@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Signal Atlas’s Wi-Fi, Bluetooth Low Energy, and NFC services, hardware requirements, and local snapshot workspace.">
+  <meta name="theme-color" content="#101e2c">
+  <meta property="og:title" content="Scanners and workspace — Signal Atlas">
+  <meta property="og:description" content="Explore Signal Atlas’s Wi-Fi, Bluetooth Low Energy, and NFC services, hardware requirements, and local snapshot workspace.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mjkozicki.github.io/signal-atlas/scanners.html">
+  <link rel="canonical" href="https://mjkozicki.github.io/signal-atlas/scanners.html">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site.js" defer></script>
+  <title>Scanners and workspace — Signal Atlas</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header wrap"><a class="brand" href="./" aria-label="Signal Atlas home"><img src="./assets/icon.svg" alt="" width="36" height="36">Signal Atlas</a><nav aria-label="Main navigation"><a href="./index.html">Home</a><a href="./scanners.html" aria-current="page">Scanners</a><a href="./quickstart.html">Quickstart</a><a href="./about.html">About</a><a class="nav-github" href="https://github.com/mjkozicki/signal-atlas">GitHub <span aria-hidden="true">↗</span></a></nav></header>
+<main id="main">
+    <section id="capabilities" class="section wrap" aria-labelledby="capabilities-title">
+      <div class="page-intro"><p class="eyebrow">SCANNERS / CAPABILITIES</p><h1 id="capabilities-title">Three technologies.<br>One curious workspace.</h1><p>Each service keeps its own history. Explore demo data first, then bring your own observations.</p></div>
+      <div class="protocols">
+        <article id="wifi"><span class="protocol-label">01 / WI-FI</span><h3>See what access<br>points announce.</h3><p>Import raw 802.11 or radiotap captures. Inspect SSIDs, BSSIDs, signal levels, channels, and advertised security settings. Review findings against your authorized inventory.</p><p class="requirement">Live capture: Linux, a monitor interface, <code>iw</code>, and <code>dumpcap</code>.</p><a class="text-link" href="https://github.com/mjkozicki/signal-atlas#wi-fi-cli">Wi-Fi guide <span aria-hidden="true">↗</span></a></article>
+        <article id="bluetooth"><span class="protocol-label">02 / BLUETOOTH LOW ENERGY</span><h3>Read the<br>advertisements.</h3><p>Discover BLE devices and inspect advertised names, received signal, service identifiers, and manufacturer data. Save and compare observations without pairing.</p><p class="requirement">Live discovery: Python, Bleak, a supported adapter, and OS permission.</p><a class="text-link" href="https://github.com/mjkozicki/signal-atlas/blob/main/docs/bluetooth.md">Bluetooth guide <span aria-hidden="true">↗</span></a></article>
+        <article id="nfc"><span class="protocol-label">03 / NEAR-FIELD COMMUNICATION</span><h3>Bring a tag<br>into focus.</h3><p>Present a tag to a compatible contactless reader. Inspect available identifiers and supported, readable NDEF text or URI records with read-only polling.</p><p class="requirement">Live polling: Python, pyscard, and a PC/SC-compatible reader.</p><a class="text-link" href="https://github.com/mjkozicki/signal-atlas/blob/main/docs/nfc.md">NFC guide <span aria-hidden="true">↗</span></a></article>
+      </div>
+    </section>
+
+    <section id="workspace" class="workspace-section" aria-labelledby="workspace-title">
+      <div class="wrap">
+        <div class="workspace-intro"><div><p class="eyebrow">02 / UNDERSTAND</p><h2 id="workspace-title">More than a list<br>of nearby devices.</h2></div><p>Keep the evidence and learn how to read it. The built-in About guide explains the measurements, terminology, scan process, and limits of each observation. <a class="inline-link" href="./about.html">Read the guide online</a>.</p></div>
+        <figure class="workspace-figure"><a href="./assets/workspace.png" aria-label="Open full-size screenshot of the Signal Atlas About guide"><img src="./assets/workspace.png" width="1440" height="1000" loading="lazy" alt="Signal Atlas desktop app showing the About guide, Wi-Fi, Bluetooth and NFC explanations, and an interactive RSSI example at minus 60 dBm."></a><figcaption><span>INSIDE SIGNAL ATLAS</span> The local app’s About guide. Example measurements are illustrative.</figcaption></figure>
+        <div class="workspace-features"><article><span>KEEP CONTEXT</span><h3>A history you can manage.</h3><p>Compare snapshots, hide clutter, restore hidden entries, or delete individual snapshots. Visibility survives a restart.</p></article><article><span>TAKE IT WITH YOU</span><h3>Export your observations.</h3><p>Wi-Fi exports JSON, HTML, and SARIF. Bluetooth and NFC export JSON and CSV. Share only the records you choose.</p></article><article><span>KNOW THE LIMITS</span><h3>Measurements, explained.</h3><p>RSSI is received power, not speed or distance. Unknown fields stay unknown, and synthetic observations are labeled.</p></article></div>
+      </div>
+    </section>
+
+<div class="wrap next-page"><a class="button primary" href="./quickstart.html">Get started ↗</a><a class="text-link" href="./process.html">How scanning works ↗</a></div>
+</main>
+  <footer class="footer wrap"><a class="brand" href="./"><img src="./assets/icon.svg" alt="" width="28" height="28">Signal Atlas</a><p>© 2026 Michael Kozicki</p><a href="https://github.com/mjkozicki/signal-atlas/blob/main/SECURITY.md">Report a security issue</a></footer>
+</body>
+</html>

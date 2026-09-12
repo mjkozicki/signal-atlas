@@ -1,0 +1,20 @@
+services:
+  atlas:
+    build: .
+    image: signal-atlas:local
+    init: true
+    ports:
+      - "127.0.0.1:${SIGNAL_ATLAS_PORT:-8787}:8787"
+    volumes:
+      - atlas-data:/app/.data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 15s
+
+volumes:
+  atlas-data:

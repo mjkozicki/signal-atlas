@@ -1,0 +1,25 @@
+# Allow only source inputs; never send observations, credentials, or local builds.
+*
+!Dockerfile
+!package.json
+!package-lock.json
+!go.mod
+!go.sum
+!svelte.config.js
+!tsconfig.json
+!vite.config.ts
+!src/
+!src/**
+!fixtures/
+!fixtures/**
+!LICENSE
+!ATTRIBUTION.md
+!THIRD_PARTY_NOTICES.md
+!licenses/
+!licenses/**
+**/node_modules
+**/__pycache__
+**/*.pyc
+src/internal/web/dist/*
+!src/internal/web/dist/.gitkeep
+src/site/

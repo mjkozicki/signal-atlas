@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How Signal Atlas collects, decodes, and saves Wi-Fi, Bluetooth, and NFC observations, including scan states and comparison limits.">
+  <meta name="theme-color" content="#101e2c">
+  <meta property="og:title" content="Scan process — Signal Atlas">
+  <meta property="og:description" content="How Signal Atlas collects, decodes, and saves Wi-Fi, Bluetooth, and NFC observations, including scan states and comparison limits.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mjkozicki.github.io/signal-atlas/process.html">
+  <link rel="canonical" href="https://mjkozicki.github.io/signal-atlas/process.html">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site.js" defer></script>
+  <title>Scan process — Signal Atlas</title>
+  <script src="./guide.js" type="module"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header wrap"><a class="brand" href="./" aria-label="Signal Atlas home"><img src="./assets/icon.svg" alt="" width="36" height="36">Signal Atlas</a><nav aria-label="Main navigation"><a href="./index.html">Home</a><a href="./scanners.html">Scanners</a><a href="./quickstart.html">Quickstart</a><a href="./about.html" aria-current="page">About</a><a class="nav-github" href="https://github.com/mjkozicki/signal-atlas">GitHub <span aria-hidden="true">↗</span></a></nav></header>
+<main id="main">
+<div class="guide-shell wrap"><div class="page-intro"><p class="eyebrow">ABOUT / SCAN PROCESS</p><h1>From discovery to a snapshot.</h1><p class="lead">Follow each source through collection, decoding, storage, and comparison, with separate histories for Wi-Fi, Bluetooth, and NFC.</p></div><nav class="guide-nav" aria-label="About guide"><a href="./about.html">Overview</a><a href="./measurements.html">Measurements</a><a href="./process.html" aria-current="page">Scan process</a><a href="./glossary.html">Glossary</a></nav><section id="scan-process" class="guide-section" aria-labelledby="process-title"><div class="section-heading"><p class="eyebrow">FOLLOW THE PROCESS</p><h2 id="process-title">From discovery to comparison</h2><p>One dashboard, three independent local services, and separate histories.</p></div>
+  <ol class="process-steps"><li><span>1</span><div><h3>Choose a source</h3><p>Import a Wi-Fi capture, select a native Bluetooth/NFC scan, or load synthetic demo data. Opening a page or loading a demo does not start a hardware scan.</p></div></li><li><span>2</span><div><h3>Collect a bounded observation</h3><p>Live scans last 1–60 seconds. The selected channel, nearby advertisers, reader compatibility, and device visibility determine what can be observed.</p></div></li><li><span>3</span><div><h3>Decode and save</h3><p>Wi-Fi announcements become AP records and scoped findings. BLE advertisements become device metadata. Supported NFC payloads become tag records. Saved snapshots retain the source and observations.</p></div></li><li><span>4</span><div><h3>Inspect, compare, and export</h3><p>Select an entry for details. Compare snapshots collected under similar conditions. Bluetooth/NFC comparisons require the same demo/live mode. An absent identifier may reflect range, rotation, or a missed presentation.</p></div></li></ol>
+  <div class="protocol-cards process-cards"><article class="panel"><h3>Wi-Fi capture</h3><p>Import PCAP/PCAPNG containing wireless management frames. Native capture requires Linux and an existing monitor interface; it listens on that interface’s current channel, without association or injection.</p><p>Add exact SSIDs and BSSIDs under Authorized networks. Reassess to create a new snapshot with the current inventory; earlier findings remain unchanged.</p></article><article class="panel"><h3>BLE discovery</h3><p>Check provider setup and OS Bluetooth permission, choose a duration, and start discovery. The OS may send scan requests, but the service makes no peripheral connections or pairing attempts.</p><p>Only advertising devices visible to the OS can appear. Provider availability does not confirm that the adapter is powered on or permission has been granted.</p></article><article class="panel"><h3>NFC polling</h3><p>Attach a compatible PC/SC contactless reader, select it, and present a tag during the scan. Polling energizes the reader and exchanges fixed select/read commands.</p><p>The supported Type 4 and ACR122 Type 2 profiles read UID/NDEF where accessible. Unsupported tags may still yield an identifier and a read note. No writing or authentication is performed.</p></article></div>
+  <div class="panel lifecycle"><h3>Bluetooth / NFC scan states</h3><dl><div><dt>Running</dt><dd>Collection is in progress; results appear when it finishes.</dd></div><div><dt>Completed</dt><dd>A snapshot was saved, even if no devices or tags were observed.</dd></div><div><dt>Failed</dt><dd>A provider, permission, reader, or data error stopped the scan. Read the recorded error.</dd></div><div><dt>Canceled</dt><dd>You stopped the job. Partial observations are not saved.</dd></div></dl><p class="small-note">One scan can run per Bluetooth/NFC database at a time. Failed scans never fall back to demo data. A service interrupted mid-scan is marked failed when its expired job lease is recovered.</p></div>
+</section><div class="next-page"><a class="text-link" href="./glossary.html">Next: explore the glossary ↗</a></div></div>
+</main>
+  <footer class="footer wrap"><a class="brand" href="./"><img src="./assets/icon.svg" alt="" width="28" height="28">Signal Atlas</a><p>© 2026 Michael Kozicki</p><a href="https://github.com/mjkozicki/signal-atlas/blob/main/SECURITY.md">Report a security issue</a></footer>
+</body>
+</html>

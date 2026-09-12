@@ -1,0 +1,29 @@
+# Local observations, captures, reports, and credentials
+.data/
+exports/
+signal-atlas-backup/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+report.json
+report.csv
+report.sarif
+report.html
+
+# Generated builds and dependencies
+bin/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+coverage.out
+src/internal/web/dist/*
+!src/internal/web/dist/.gitkeep
+.DS_Store
