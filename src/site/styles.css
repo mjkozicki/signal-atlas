@@ -9,7 +9,7 @@
 /* Shared navigation and focused reading pages. */
 .header nav{flex-wrap:wrap}
 .header nav [aria-current="page"]{color:var(--lime);text-decoration:underline;text-underline-offset:.6rem;text-decoration-thickness:2px}
-.page-intro{max-width:52rem;padding-block:0 1.5rem}
+.page-intro{padding-block:0 1.5rem}
 .page-intro h1{font-size:clamp(2.6rem,5vw,4.5rem);margin-block:1rem 1.4rem;line-height:1.08}
 .page-intro>.lead{max-width:46rem}
 .page-intro>p:last-child{font-size:1.1rem}
