@@ -4,3 +4,6 @@ export interface Finding { id: string; rule_id: string; severity: string; title:
 export interface Scan { hidden?: boolean; id: string; created_at: string; source: string; rule_version: string; access_points: AP[]; findings: Finding[]; score: number | null; warnings: string[] }
 export interface Change { bssid: string; ssid: string; kind: string; detail: string }
 export interface Difference { from: string; to: string; changes: Change[] }
+export interface AuthorizedNetwork { ssid: string; bssids: string[]; targets?: { ip: string; ports: number[] }[] }
+export interface Inventory { authorized: AuthorizedNetwork[] }
+export interface CurrentConnection { ssid: string; bssid: string; interface: string }

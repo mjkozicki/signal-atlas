@@ -5,7 +5,7 @@
   import SnapshotActions from './components/SnapshotActions.svelte';
   let showHidden = $state(false);
   import { Wifi, LayoutDashboard, ShieldCheck, Radio, History, ListChecks, Download, Upload, Search, ChevronRight, ArrowUpRight, CircleHelp, LockKeyhole, Activity, Check, AlertTriangle, X, RefreshCw, HardDrive, Bluetooth, Nfc } from '@lucide/svelte';
-  import type { AP, Scan, Finding, Difference } from './types';
+  import type { AP, Scan, Finding, Difference, Inventory, CurrentConnection } from './types';
   let scans = $state<Scan[]>([]), scan = $state<Scan | null>(null), selected = $state<AP | null>(null);
   let page = $state('Overview'), query = $state(''), band = $state('all'), severity = $state('all');
   let busy = $state(false), error = $state(''), notice = $state(''), inventoryText = $state(''), from = $state(''), to = $state(''), difference = $state<Difference | null>(null);
@@ -44,6 +44,24 @@
     await work(async () => { if (file.size > 32*1024*1024) throw new Error('Capture must be 32 MB or smaller.'); const s = await api('/import', { method: 'POST', body: file }); await refresh(s.id); navigate('Overview'); notice = `Imported ${file.name}. ${s.access_points.length} access points observed.`; }); input.value = '';
   }
   async function saveInventory() { await work(async () => { const value = JSON.parse(inventoryText); await api('/inventory', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(value) }); notice = 'Authorization inventory saved. Reassess the latest capture to apply it; historical scans retain their original findings.'; }); }
+  async function addCurrentWifi() {
+    await work(async () => {
+      const connection = await api('/current-connection') as CurrentConnection;
+      const inventory = JSON.parse(inventoryText) as Inventory;
+      if (!Array.isArray(inventory.authorized)) throw new Error('Inventory must contain an authorized networks array.');
+      let network = inventory.authorized.find(item => item.ssid === connection.ssid);
+      if (!network) {
+        network = { ssid: connection.ssid, bssids: [] };
+        inventory.authorized.push(network);
+      }
+      if (!Array.isArray(network.bssids)) throw new Error(`BSSID list for ${JSON.stringify(connection.ssid)} must be an array.`);
+      if (!network.bssids.some(bssid => bssid.toLowerCase() === connection.bssid.toLowerCase())) {
+        network.bssids.push(connection.bssid);
+      }
+      inventoryText = JSON.stringify(inventory, null, 2);
+      notice = `Added ${connection.ssid} (${connection.bssid}) to the editor. Save inventory to persist it.`;
+    });
+  }
   async function reassess() { await work(async () => { const s = await api('/reassess', { method: 'POST' }); await refresh(s.id); notice = 'Created a new assessment using the current inventory.'; }); }
   async function compare() { await work(async () => { difference = await api(`/diff?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`); }); }
   async function manageSnapshot(s: Scan, action: 'hide' | 'restore' | 'delete') {
@@ -82,7 +100,7 @@
       <div class="snapshot-toolbar"><label><input type="checkbox" bind:checked={showHidden} disabled={busy} onchange={() => work(() => refresh())}/> Show hidden snapshots</label>{#if scan}{#key scan.id}<SnapshotActions id={scan.id} label={`${date(scan.created_at)} · ${scan.source}`} hidden={scan.hidden} disabled={busy} onaction={action => manageSnapshot(scan!, action)}/>{/key}{/if}</div>
       {#if scan}<div class="scan-bar"><span class:demo={scan.source.includes('demo')} class="source-label">{scan.source.includes('demo') ? 'DEMO DATA' : 'SAVED OBSERVATION'}</span><span>{date(scan.created_at)}</span><span class="scan-source">{scan.source}</span><label class="scan-picker">Snapshot <select value={scan.id} onchange={e => chooseScan(e.currentTarget.value)}>{#each scans as s}<option value={s.id}>{date(s.created_at)} · {s.id.slice(-6)}{s.hidden ? ' · Hidden' : ''}</option>{/each}</select></label></div>{/if}
       {#if page === 'Authorized networks'}
-        <div class="inventory-grid"><section class="panel editor"><div class="panel-heading"><h2>Authorization inventory</h2><span class="badge neutral">Exact BSSIDs only</span></div><p>SSID names alone do not establish ownership. Add the exact BSSIDs from your router or controller.</p><label for="inventory">Network configuration · JSON</label><textarea id="inventory" bind:value={inventoryText} spellcheck="false" rows="20"></textarea><div class="editor-actions"><button class="primary" disabled={busy} onclick={saveInventory}>Save inventory</button><button class="secondary" disabled={busy || !scans.some(s => !s.hidden)} onclick={reassess}><RefreshCw size={15}/> Reassess latest capture</button></div></section><section class="panel scope-card"><ShieldCheck size={30}/><h2>Authorization is explicit</h2><p>Passive captures can include neighboring APs. Security scoring covers allowlisted APs; unknown BSSIDs using an owned SSID are flagged for review.</p><h3>Active checks</h3><p>Run from the CLI on Linux. They require an exact connected SSID/BSSID match, an explicit target list, and confirmation for that run.</p><code>wifi-scan audit --network Home --active --confirm-active --interface wlan0</code><p>At most eight TCP address/port pairs, once per network every five minutes. A reachable service is an observation, not proof of a vulnerability.</p><h3>Configuration example</h3><pre>{`{"authorized": [{
+        <div class="inventory-grid"><section class="panel editor"><div class="panel-heading"><h2>Authorization inventory</h2><span class="badge neutral">Exact BSSIDs only</span></div><p>SSID names alone do not establish ownership. Add exact BSSIDs from your router, controller, or current Mac connection.</p><div class="editor-actions"><button class="secondary" disabled={busy} onclick={addCurrentWifi}><Wifi size={15}/> Add current Wi-Fi</button><span>Reads the connected SSID and BSSID; saving remains explicit.</span></div><label for="inventory">Network configuration · JSON</label><textarea id="inventory" bind:value={inventoryText} spellcheck="false" rows="20"></textarea><div class="editor-actions"><button class="primary" disabled={busy} onclick={saveInventory}>Save inventory</button><button class="secondary" disabled={busy || !scans.some(s => !s.hidden)} onclick={reassess}><RefreshCw size={15}/> Reassess latest capture</button></div></section><section class="panel scope-card"><ShieldCheck size={30}/><h2>Authorization is explicit</h2><p>Passive captures can include neighboring APs. Security scoring covers allowlisted APs; unknown BSSIDs using an owned SSID are flagged for review.</p><h3>Active checks</h3><p>Run from the CLI on Linux. They require an exact connected SSID/BSSID match, an explicit target list, and confirmation for that run.</p><code>wifi-scan audit --network Home --active --confirm-active --interface wlan0</code><p>At most eight TCP address/port pairs, once per network every five minutes. A reachable service is an observation, not proof of a vulnerability.</p><h3>Configuration example</h3><pre>{`{"authorized": [{
   "ssid": "Home",
   "bssids": ["02:11:22:33:44:55"],
   "targets": [{

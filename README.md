@@ -137,7 +137,7 @@ Export files are created with mode 0600; existing files are not overwritten. HTM
 
 Live capture requires **Linux**, `iw`, `dumpcap`, appropriate capture permissions, and a **preconfigured monitor interface**. The scanner validates that the interface exists and is in monitor mode, listens for beacon/probe-response frames, and stops after 1–60 seconds, 32 MB, or 250,000 packets. It never changes adapter mode, associates to a network, injects frames, or performs channel hopping. A scan covers the adapter's current channel. No broad sudo installation or privilege changes are performed automatically.
 
-macOS and Windows support offline PCAP/PCAPNG analysis and the dashboard. Native live **Wi-Fi capture** on these platforms is not implemented; the scanner reports this explicitly instead of substituting demo data. Export a suitable wireless capture from a supported sensor and import it locally.
+macOS and Windows support offline PCAP/PCAPNG analysis and the dashboard. On macOS, **Authorized networks → Add current Wi-Fi** reads the connected SSID and BSSID through CoreWLAN (using the Swift command-line tool), then stages it in the editor; review and save it explicitly. macOS may require Location Services permission for the app/terminal. Native live **Wi-Fi capture** on these platforms is not implemented; the scanner reports this explicitly instead of substituting demo data. Export a suitable wireless capture from a supported sensor and import it locally.
 
 ## Authorization and bounded active checks
 

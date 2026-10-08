@@ -174,6 +174,27 @@ func TestAuthorizationFailsClosed(t *testing.T) {
 		t.Fatal("rate limit bypass")
 	}
 }
+
+func TestParseCurrentConnection(t *testing.T) {
+	connection, err := ParseCurrentConnection([]byte(`{"ssid":"Home","bssid":"02:11:22:33:44:55","interface":"en0"}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if connection.SSID != "Home" || connection.BSSID != "02:11:22:33:44:55" || connection.Interface != "en0" {
+		t.Fatalf("unexpected current connection: %+v", connection)
+	}
+	for _, input := range []string{
+		`{"ssid":"","bssid":"02:11:22:33:44:55"}`,
+		`{"ssid":"Home","bssid":"not-a-bssid"}`,
+		`{"ssid":"Home","bssid":"01:11:22:33:44:55"}`,
+		`not-json`,
+	} {
+		if _, err := ParseCurrentConnection([]byte(input)); err == nil {
+			t.Errorf("invalid current connection accepted: %s", input)
+		}
+	}
+}
+
 func TestPersistenceAndExports(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "state.db")
 	store, e := OpenStore(path)

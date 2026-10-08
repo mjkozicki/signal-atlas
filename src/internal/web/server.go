@@ -61,6 +61,14 @@ func Handler(store *scanner.Store) http.Handler {
 		}
 		send(w, i)
 	})
+	mux.HandleFunc("GET /api/current-connection", func(w http.ResponseWriter, r *http.Request) {
+		connection, e := scanner.CurrentConnection(r.Context())
+		if e != nil {
+			fail(w, e)
+			return
+		}
+		send(w, connection)
+	})
 	mux.HandleFunc("PUT /api/inventory", func(w http.ResponseWriter, r *http.Request) {
 		var inv scanner.Inventory
 		d := json.NewDecoder(r.Body)

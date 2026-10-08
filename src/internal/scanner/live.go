@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net"
 	"os"
@@ -60,9 +61,22 @@ func CaptureLive(ctx context.Context, iface string, duration time.Duration) (*Sc
 }
 
 type Connection struct {
-	SSID      string
-	BSSID     string
-	Interface string
+	SSID      string `json:"ssid"`
+	BSSID     string `json:"bssid"`
+	Interface string `json:"interface"`
+}
+
+func ParseCurrentConnection(data []byte) (Connection, error) {
+	var c Connection
+	if err := json.Unmarshal(data, &c); err != nil {
+		return c, fmt.Errorf("decode current Wi-Fi connection: %w", err)
+	}
+	mac, err := net.ParseMAC(c.BSSID)
+	if c.SSID == "" || err != nil || len(mac) != 6 || mac[0]&1 != 0 {
+		return Connection{}, fmt.Errorf("macOS did not return an associated Wi-Fi network with a valid BSSID")
+	}
+	c.BSSID = strings.ToLower(mac.String())
+	return c, nil
 }
 
 func LocalConnection(ctx context.Context, iface string) (Connection, error) {
