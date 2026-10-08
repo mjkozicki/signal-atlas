@@ -121,7 +121,10 @@ and `.data/nfc.db` files. The dashboard remains at port 8787.
 
 Click **Import capture** and choose a PCAP/PCAPNG containing raw 802.11 or radiotap
 management frames. Ethernet/IP captures cannot provide the required Wi-Fi information.
-Add your managed SSIDs and exact BSSIDs under **Authorized networks**, save, and
+On macOS, **Authorized networks → Add current Wi-Fi** stages your connected SSID and
+BSSID in the inventory editor; save it explicitly. This may require Location Services
+permission. On other platforms, add managed SSIDs and exact BSSIDs under
+**Authorized networks**, then save and
 **Reassess latest capture**. Seeing an SSID does not prove you own its AP.
 
 CLI example with the included synthetic fixture:
